@@ -11,6 +11,8 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import dagger.hilt.android.AndroidEntryPoint
 import gaur.himanshu.august.paging3.databinding.FragmentMainBinding
+import gaur.himanshu.august.paging3.model.roommodel.NewsRoomModel
+import gaur.himanshu.august.paging3.paging.ClickHandler
 import gaur.himanshu.august.paging3.paging.PagingAdapter
 import gaur.himanshu.august.paging3.viewmodels.NewsViewModels
 import kotlinx.coroutines.CoroutineScope
@@ -19,13 +21,13 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainFragment : Fragment() {
+class MainFragment : Fragment(),ClickHandler{
 
     lateinit var navController: NavController
 
     val viewModel: NewsViewModels by viewModels()
 
-    val pagingAdapter = PagingAdapter()
+    val pagingAdapter = PagingAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +64,16 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         navController = Navigation.findNavController(view)
+
+
+
+    }
+
+    override fun handleSmallClick(newsRoomModel: NewsRoomModel) {
+        val action=MainFragmentDirections.actionMainFragmentToDetailsFragment()
+            action.newsRoomModel=newsRoomModel
+
+        navController.navigate(action)
     }
 
 }

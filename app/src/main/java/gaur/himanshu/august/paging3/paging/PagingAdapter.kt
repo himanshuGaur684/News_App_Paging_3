@@ -9,11 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import gaur.himanshu.august.paging3.BR
 import gaur.himanshu.august.paging3.databinding.ListItemNewsBinding
 import gaur.himanshu.august.paging3.model.roommodel.NewsRoomModel
+import kotlinx.android.synthetic.main.list_item_news.view.*
 
-class PagingAdapter() :
+class PagingAdapter(val clickHandler: ClickHandler) :
     PagingDataAdapter<NewsRoomModel, PagingAdapter.AdapterViewHolder>(diffCallback) {
 
-    inner class AdapterViewHolder(private val viewDataBinding: ViewDataBinding) :
+    inner class AdapterViewHolder( val viewDataBinding: ViewDataBinding) :
         RecyclerView.ViewHolder(viewDataBinding.root) {
 
         fun bind(newsRoomModel: NewsRoomModel) {
@@ -30,6 +31,10 @@ class PagingAdapter() :
 
     override fun onBindViewHolder(holder: AdapterViewHolder, position: Int) {
         getItem(position)?.let { holder.bind(it) }
+
+        holder.viewDataBinding.root.relative_root.setOnClickListener {
+            clickHandler.handleSmallClick(getItem(position)!!)
+        }
     }
 
     companion object {

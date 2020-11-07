@@ -18,5 +18,13 @@
         android:id="@+id/detailsFragment"
         android:name="gaur.himanshu.august.paging3.fragments.DetailsFragment"
         android:label="fragment_details"
-        tools:layout="@layout/fragment_details" />
+        tools:layout="@layout/fragment_details">
+
+        <argument
+            android:name="news_room_model"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="gaur.himanshu.august.paging3.model.roommodel.NewsRoomModel" />
+
+    </fragment>
 </navigation>
